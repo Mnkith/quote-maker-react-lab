@@ -6,8 +6,10 @@ import { addQuote } from '../actions/quotes';
 class QuoteForm extends Component {
 
   state = {
+
     content: '',
-    author: ''
+    author: '',
+    // votes: 0
   }
 
   handleOnChange = event => {
@@ -18,7 +20,7 @@ class QuoteForm extends Component {
 
   handleOnSubmit = event => {
     event.preventDefault()
-    this.props.addQuote(this.state)
+    this.props.addQuote({ id: uuid(), ...this.state })
     this.setState({
       content: '',
       author: ''
@@ -32,7 +34,7 @@ class QuoteForm extends Component {
           <div className="col-md-8 col-md-offset-2">
             <div className="panel panel-default">
               <div className="panel-body">
-                <form className="form-horizontal" onClick={(e) => this.handleOnSubmit(e)}>
+                <form className="form-horizontal" onSubmit={(e) => this.handleOnSubmit(e)}>
                   <div className="form-group">
                     <label htmlFor="content" className="col-md-4 control-label">Quote</label>
                     <div className="col-md-5">
@@ -40,6 +42,7 @@ class QuoteForm extends Component {
                         name='content'
                         className="form-control"
                         value={this.state.content}
+                        onChange={e => this.handleOnChange(e)}
                       />
                     </div>
                   </div>
@@ -51,6 +54,7 @@ class QuoteForm extends Component {
                         type="text"
                         name='author'
                         value={this.state.author}
+                        onChange={e => this.handleOnChange(e)}
                       />
                     </div>
                   </div>
